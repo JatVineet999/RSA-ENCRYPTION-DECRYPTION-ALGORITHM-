@@ -1,8 +1,11 @@
+/*Authors:Vineet kumar pilania
+Topic:Rsa algorithm in c
+Date:9-FEB-2022*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-
+// declaration of variables
 int x = 71, y = 293, n, t, i, flag;
 long int e[500000], d[500000], temp[500000], j;
 char en[100000], m[100000];
@@ -12,26 +15,37 @@ void encryption_key();
 long int cd(long int);
 void encrypt();
 void decrypt();
-
+// main function
 int main()
 {
-
-   printf("enter the message\n");
-   gets(msg);
-   for (i = 0; msg[i] != NULL; i++)
-      m[i] = msg[i];
-   n = x * y;
-   t = (x - 1) * (y - 1);
-
-   encryption_key();
-
-   encrypt();
-
-   decrypt();
-
+   int ch;
+   printf("Enter 1 for Encryption\n");
+   printf("Enter 2 for Decryption\n");
+   scanf("%d", &ch);
+   if (ch == 1)
+   {
+      fflush(stdin);
+      printf("Enter the Message to Encrypt\n");
+      gets(msg);
+      for (i = 0; msg[i] != '\0'; i++)
+         m[i] = msg[i];
+      n = x * y;
+      t = (x - 1) * (y - 1);
+      encryption_key();
+      encrypt();
+   }
+   if (ch == 2)
+   {
+      msg[0] = 'h';
+      m[0] = 'h';
+      n = x * y;
+      t = (x - 1) * (y - 1);
+      encryption_key();
+      decrypt();
+   }
    return 0;
 }
-
+// checking for the prime no
 int isprime(long int pr)
 {
    int i;
@@ -43,7 +57,7 @@ int isprime(long int pr)
    }
    return 1;
 }
-
+// generating public(e[]) and private encryption key(d[])
 void encryption_key()
 {
    int k;
@@ -78,7 +92,7 @@ long int cd(long int a)
          return (k / a);
    }
 }
-
+// encrypt fuction
 void encrypt()
 {
    long int pt, ct, key = e[0], k, len;
@@ -101,13 +115,26 @@ void encrypt()
       i++;
    }
    en[i] = '\0';
-   printf("\n\nTHE ENCRYPTED MESSAGE IS\n");
+   printf("\n\n DECRYPTION KEY is:\n");
+   for (i = 0; en[i] != '\0'; i++)
+      printf("%ld ", temp[i]);
+   printf("\n\nTHE ENCRYPTED MESSAGE is:\n");
    for (i = 0; en[i] != '\0'; i++)
       printf("%c", en[i]);
 }
-
+// decryption function
 void decrypt()
 {
+   fflush(stdin);
+   printf("\n\nENTER ENCRYPTED MESSAGE \n");
+   gets(en);
+   printf("\n\n ENTER DECRYPTION KEY\n");
+   for (i = 0; i != strlen(en); i++)
+   {
+      scanf("%ld", &temp[i]);
+   }
+   d[0] = 13627; // private key code
+
    long int pt, ct, key = d[0], k;
    i = 0;
    while (en[i] != '\0')
@@ -124,7 +151,7 @@ void decrypt()
       i++;
    }
    m[i] = '\0';
-   printf("\n\nTHE DECRYPTED MESSAGE IS\n");
+   printf("\n\nTHE DECRYPTED MESSAGE is:\n");
    for (i = 0; m[i] != '\0'; i++)
       printf("%c", m[i]);
 
